@@ -6,6 +6,7 @@ import { getLessonsOfDay } from "../libs/cesar.js"
 const lessonsOfDay = async (client) => {
   client.on("ready", async () => {
     const channel = client.channels.cache.get(config.channelLesson)
+    if (!channel) return console.error("Channel not found")
     await channel.bulkDelete(1, true)
 
     const message = await channel.send("🤔")

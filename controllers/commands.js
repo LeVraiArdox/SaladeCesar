@@ -14,7 +14,11 @@ const commands = async (client) => {
 
   client.on("ready", async () => {
     const devGuild = await client.guilds.cache.get(config.guildID)
-    devGuild.commands.set(client.commands.map((cmd) => cmd))
+    if (devGuild) {
+      devGuild.commands.set(client.commands.map((cmd) => cmd))
+    } else {
+      console.error(`Guild with ID ${config.guildID} not found.`)
+    }
   })
 }
 
