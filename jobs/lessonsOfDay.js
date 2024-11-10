@@ -24,7 +24,7 @@ const lessonsOfDay = async (client) => {
           .setTitle(`**📚   \u200B${lesson.schoolSubject.name}**`)
           .addFields(
             {
-              name: "👨‍🏫 ┃ Profeseur",
+              name: "👨‍🏫 ┃ Professeur",
               value:
                 "`" +
                 lesson.teachers
@@ -61,7 +61,7 @@ const lessonsOfDay = async (client) => {
           )
 
         message.edit({
-          content: `>>> Il n'y a pas de pelle as esquiver aujourd'hui 🤗`,
+          content: `>>> Il n'y a pas de pelle a esquivé aujourd'hui 🤗`,
           embeds: [noLessonEmbed],
         })
 
