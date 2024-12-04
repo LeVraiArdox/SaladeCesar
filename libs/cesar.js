@@ -18,14 +18,14 @@ import { useSession } from "../utils/session.js"
 
 const bodyParser = async (path) => {
   const session = await useSession()
-  const { body, ok } = await got.get(`${config.baseUrl}${path ?? ""}`, {
+  const { body, statusCode, statusMessage } = await got.get(`${config.baseUrl}${path ?? ""}`, {
     headers: {
       Cookie: `PHPSESSID=${session}`,
     },
   })
 
-  if (!ok) {
-    throw Error(`Cesar error: ${res.status} : ${res.statusText}`)
+  if (statusCode !== 200) {
+    throw Error(`Cesar error: ${statusCode} : ${statusMessage}`)
   }
 
   const root = parse(body)
@@ -43,9 +43,12 @@ const extractText = (element) => {
 
 const calandarJson = async (path) => {
   const body = await bodyParser(path)
-  const json = body
-    .querySelector("div[data-tui-calendar-event-lesson-schedules-value]")
-    .getAttribute("data-tui-calendar-event-lesson-schedules-value")
+  console.log(body)
+  const element = body.querySelector("div[data-tui-calendar-event-lesson-schedules-value]")
+  if (!element) {
+    throw Error("Element not found")
+  }
+  const json = element.getAttribute("data-tui-calendar-event-lesson-schedules-value")
 
   return JSON.parse(json)
 }
